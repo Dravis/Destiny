@@ -36,6 +36,11 @@ namespace Destiny.Maple.Scripting
             this.Expose("askAcceptDecline", new Func<int>(this.AskAcceptDecline));
 
 			this.Expose("openStorage", new Action(this.OpenStorage));
+            this.Expose("gainMeso", new Action<int>(this.GainMeso));
+            this.Expose("gainExperience", new Action<int>(this.GainExperience));
+
+            this.Expose("getPlayerName", new Func<string>(this.GetPlayerName));
+            this.Expose("getPlayerLevel", new Func<int>(this.GetPlayerLevel));
         }
 
         public void SetResult(int value)
@@ -155,5 +160,25 @@ namespace Destiny.Maple.Scripting
 
 			mCharacter.Storage.Show(mNpc);
 		}
+
+        private void GainMeso(int gain)
+        {
+            mCharacter.Meso += gain;
+        }
+
+        private void GainExperience(int gain)
+        {
+            mCharacter.Experience += gain;
+        }
+
+        private string GetPlayerName()
+        {
+            return mCharacter.Name;
+        }
+
+        private int GetPlayerLevel()
+        {
+            return mCharacter.Level;
+        }
     }
 }

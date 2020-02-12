@@ -51,7 +51,7 @@ namespace Destiny.Data
                 connection.Open();
                 using (MySqlCommand command = Database.GetCommand(connection, constraints, args))
                 {
-					string tableAndAlias = string.Format("`{0}`{1}", this.Table, !string.IsNullOrWhiteSpace(this.TableAlias) ? string.Format(" AS `{0}`", this.TableAlias) : "");
+					string tableAndAlias = string.Format("{0}{1}", this.Table, !string.IsNullOrWhiteSpace(this.TableAlias) ? string.Format(" AS {0}", this.TableAlias) : "");
 					string joinClause = string.Join("", this.JoinConditions);
 					foreach (var param in this.JoinParameters)
 					{
@@ -99,7 +99,7 @@ namespace Destiny.Data
 			}
 
 			var tableAndAlias = SeparateTableAndAlias(table);
-			string safeTableAndAlias = string.Format("`{0}`{1}", tableAndAlias.Item1, !string.IsNullOrWhiteSpace(tableAndAlias.Item2) ? string.Format(" AS `{0}`", tableAndAlias.Item2) : "");
+			string safeTableAndAlias = string.Format("{0}{1}", tableAndAlias.Item1, !string.IsNullOrWhiteSpace(tableAndAlias.Item2) ? string.Format(" AS {0}", tableAndAlias.Item2) : "");
 			outputBuilder.Append(string.Format(" JOIN {0}", safeTableAndAlias));
 
 			if (!String.IsNullOrWhiteSpace(condition))
@@ -247,7 +247,7 @@ namespace Destiny.Data
                 connection.Open();
                 using (MySqlCommand command = Database.GetCommand(connection, constraints, args))
                 {
-					string tableAndAlias = string.Format("`{0}`{1}", this.Table, !string.IsNullOrWhiteSpace(this.TableAlias) ? string.Format(" AS `{0}`", this.TableAlias) : "");
+					string tableAndAlias = string.Format("{0}{1}", this.Table, !string.IsNullOrWhiteSpace(this.TableAlias) ? string.Format(" AS {0}", this.TableAlias) : "");
 					string joinClause = string.Join("", this.JoinConditions);
 					foreach (var param in this.JoinParameters)
 					{
@@ -305,7 +305,7 @@ namespace Destiny.Data
 			}
 
 			var tableAndAlias = SeparateTableAndAlias(table);
-			string safeTableAndAlias = string.Format("`{0}`{1}", tableAndAlias.Item1, !string.IsNullOrWhiteSpace(tableAndAlias.Item2) ? string.Format(" AS `{0}`", tableAndAlias.Item2) : "");
+			string safeTableAndAlias = string.Format("{0}{1}", tableAndAlias.Item1, !string.IsNullOrWhiteSpace(tableAndAlias.Item2) ? string.Format(" AS {0}", tableAndAlias.Item2) : "");
 			outputBuilder.Append(string.Format(" JOIN {0}", safeTableAndAlias));
 
 			if (!String.IsNullOrWhiteSpace(condition))
@@ -367,7 +367,7 @@ namespace Destiny.Data
 
             fields += " )";
 
-            Database.Execute(string.Format("INSERT INTO `{0}` {1}", this.Table, fields), valueArr);
+            Database.Execute(string.Format("INSERT INTO {0} {1}", this.Table, fields), valueArr);
         }
 
         public int InsertAndReturnID()
@@ -401,7 +401,7 @@ namespace Destiny.Data
                 connection.Open();
                 using (MySqlCommand command = Database.GetCommand(connection, constraints, args))
                 {
-                    command.CommandText = Database.ParameterizeCommandText("set", string.Format("UPDATE `{0}` SET {1} WHERE ", this.Table, fields), valueArr) + command.CommandText;
+                    command.CommandText = Database.ParameterizeCommandText("set", string.Format("UPDATE {0} SET {1} WHERE ", this.Table, fields), valueArr) + command.CommandText;
                     command.Parameters.AddRange(Database.ConstraintsToParameters("set", fields, valueArr));
 
                     command.ExecuteNonQuery();

@@ -15,11 +15,17 @@ namespace Destiny.Maple.Scripting
             mPortal = portal;
 
             this.Expose("playPortalSe", new Action(this.PlayPortalSoundEffect));
+            this.Expose("showBalloonMessage", new Action<string, short, short>(this.ShowBalloonMessage));
         }
 
         private void PlayPortalSoundEffect()
         {
             CharacterBuffs.ShowLocalUserEffect(mCharacter, UserEffect.PlayPortalSE);
+        }
+
+        private void ShowBalloonMessage(string hint, short width, short height)
+        {
+            mPortal.ShowBalloonMessage(mCharacter, hint, width, height);
         }
     }
 }

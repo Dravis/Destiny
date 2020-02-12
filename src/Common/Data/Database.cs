@@ -78,7 +78,7 @@ namespace Destiny.Data
 					final += ", ";
 				}
 
-                final += "`" + field.Replace(".", "`.`") + "`";
+                final += field;
                 processed++;
             }
 
@@ -167,7 +167,7 @@ namespace Destiny.Data
                 connection.Open();
                 using (MySqlCommand command = GetCommand(connection, constraints, args))
                 {
-                    command.CommandText = string.Format("DELETE FROM `{0}` WHERE ", table) + command.CommandText;
+                    command.CommandText = string.Format("DELETE FROM {0} WHERE ", table) + command.CommandText;
 
                     command.ExecuteNonQuery();
                 }
@@ -181,7 +181,7 @@ namespace Destiny.Data
                 connection.Open();
                 using (MySqlCommand command = GetCommand(connection, constraints, args))
                 {
-                    command.CommandText = string.Format("SELECT * FROM `{0}` WHERE ", table) + command.CommandText;
+                    command.CommandText = string.Format("SELECT * FROM {0} WHERE ", table) + command.CommandText;
 
                     using (MySqlDataReader reader = command.ExecuteReader())
                     {
